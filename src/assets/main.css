@@ -1,35 +1,119 @@
-@import './base.css';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-#app {
-  max-width: 1280px;
+html, body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* VARIÁVEIS DE TEMA */
+:root {
+  --primary: #0077cc;
+  --primary-dark: #005fa3;
+  --secondary: #ff9800;
+  --danger: #e53935;
+  --success: #43a047;
+  --gray: #ccc;
+  --gray-light: #f2f2f2;
+  --radius: 8px;
+  --padding: 12px;
+}
+
+/* CONTAINER CENTRAL */
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  padding: 20px;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+/* UTILITÁRIOS */
+.flex {
+  display: flex;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.flex-column {
+  flex-direction: column;
 }
 
-@media (min-width: 1024px) {
-  body {
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+
+/* FORMULÁRIOS */
+form {
+  padding: 24px;
+  border-radius: var(--radius);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--gray);
+  border-radius: var(--radius);
+  font-size: 16px;
+}
+
+/* BOTÕES */
+button {
+  padding: 12px 20px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* TÍTULOS */
+h1 {
     display: flex;
-    place-items: center;
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+ 
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  form {
+    padding: 16px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 15px;
+  }
+
+  button {
+    width: 100%;
   }
 }
