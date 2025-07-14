@@ -1,0 +1,66 @@
+<template>
+
+  <form class="formulario" @submit.prevent="cadastrarCliente">
+    <h1 class="title-cadastro">Crie sua conta</h1>
+    <h2 class="sub-title"> Informe seus dados nos campos abaixo</h2>
+
+    <input class="input-cadastro"  v-model="nome" placeholder="Nome" required />
+    <input  class="input-cadastro" v-model="email" placeholder="Email" type="email" required />
+     <input class="input-cadastro"  v-model="telefone" placeholder="Telefone" type="telefone" required />
+    <input class="input-cadastro" v-model="senha" placeholder="Senha" type="password" required minlength="6" />
+
+    <div class="buttons-directory">
+
+    <button  class="button-cadstro"  type="submit">Cadastrar</button>
+    <router-link to='/' class="button-volta">Volta</router-link>
+
+    </div>
+   
+
+  </form>
+</template>
+
+<script lang="ts" setup>
+    import {ref} from 'vue'
+
+    const nome = ref('')
+    const email = ref('')
+    const senha = ref('')
+    const telefone = ref('')
+
+
+async function cadastrarCliente() {
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if(!emailRegex.test(email.value)){
+    alert("por favor insira um e-mail valido ")
+    return
+  }
+  try {
+    const res = await fetch('http://localhost:3000/api/clientes/cadastrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+      nome: nome.value,
+      email: email.value,
+      senha: senha.value,
+      telefone: telefone.value
+}),
+
+    })
+
+    if (!res.ok) throw new Error('Erro no cadastro')
+
+    alert('Cliente cadastrado com sucesso!')
+    nome.value = ''
+    email.value = ''
+    senha.value = ''
+    telefone.value = ''
+  } catch (err) {
+    alert(`Erro: ${(err as Error).message}`)
+  }
+}
+
+</script>
+

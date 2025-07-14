@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <h1>Petverso</h1>
-    <CadastroCliente />
-  </div>
+  <router-view />
 </template>
 
 <script lang="ts" setup>
-import CadastroCliente from './components/CadastroCliente.vue'
 </script>
