@@ -4,3 +4,4 @@
 
 <script lang="ts" setup>
 </script>
+onde posso jogar heder no app.vue

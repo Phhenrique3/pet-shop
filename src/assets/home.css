@@ -104,3 +104,13 @@
   text-align: center;
   margin-top: auto;
 }
+
+.cadastro{
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+.cadastro:hover {
+  color: red; /* muda a cor do link dentro de parágrafos */
+}
+
