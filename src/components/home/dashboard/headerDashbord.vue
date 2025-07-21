@@ -3,8 +3,10 @@
     <div class="logo">🐾 PetShop</div>
     <nav>
       <ul class="nav-links">
-        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Home</a></li>
         <li><a href="#">Serviços</a></li>
+        <li><a href="/login">Sair</a></li>
+
       </ul>
     </nav>
   </header>
@@ -12,7 +14,7 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "headerDashbord"
 }
 
 
