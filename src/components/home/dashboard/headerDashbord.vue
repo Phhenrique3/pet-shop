@@ -4,7 +4,7 @@
     <nav>
       <ul class="nav-links">
         <li><a href="/dashboard">Home</a></li>
-        <li><a href="#">Serviços</a></li>
+        <li><a href="/servico">Serviços</a></li>
         <li><a href="/login">Sair</a></li>
 
       </ul>

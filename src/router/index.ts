@@ -1,14 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../components/home/home.vue'
+import Home from '../components/home/homeView/home.vue'
 import CadastroCliente from '../components/CadastroCliente/CadastroCliente.vue'
 import Login from '../components/login/login.vue'
 import Dashboard  from '../components/home/dashboard/dashboard.vue'
+import Servico from '../components/home/servico/ServicoViwe.vue'
+import CarServico from '../components/home/servico/CardServico.vue'
 
 const routes = [
   { path: '/', component: Home },
   { path: '/cadastro', component: CadastroCliente },
   { path: '/login', component: Login },
-  { path: '/dashboard', component: Dashboard}
+  { path: '/dashboard', component: Dashboard},
+  { path: '/servico', component: Servico },
+    { path: '/servico', component: CarServico }
 
 
   

@@ -43,13 +43,6 @@
   background-color: #2563eb;
 }
 
-.button-secondary {
-  background-color: #10b981;
-}
-
-.button-secondary:hover {
-  background-color: #059669;
-}
 
 .button-outline {
   background-color: transparent;

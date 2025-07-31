@@ -6,10 +6,6 @@
       <p>Cuidando com carinho do seu melhor amigo</p>
     </header>
 
-    <section class="actions">
-      <router-link to="/cadastro" class="button">Cadastrar Cliente</router-link>
-      <router-link to="/login" class="button button-secondary">Login</router-link>
-    </section>
 
     <section class="services">
       <h2>Serviços</h2>
@@ -29,11 +25,7 @@
       </div>
     </section>
 
-    <section class="history">
-      <router-link to="/historico" class="button button-outline">
-        Ver Histórico de Serviços
-      </router-link>
-    </section>
+    
 
     <footer class="footer">
       <p>&copy; 2025 Petverso - Todos os direitos reservados</p>
