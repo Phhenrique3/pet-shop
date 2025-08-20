@@ -40,6 +40,7 @@ async function Login() {
     })
 
     const data = await response.json()
+    localStorage.setItem('clienteId',data.cliente.id)
 
     if (response.ok) {
       router.push('/dashboard')

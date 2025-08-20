@@ -5,14 +5,16 @@ import Login from '../components/login/login.vue'
 import Dashboard  from '../components/home/dashboard/dashboard.vue'
 import Servico from '../components/home/servico/ServicoViwe.vue'
 import CarServico from '../components/home/servico/CardServico.vue'
+import Pet from '../components/home/pet/petView.vue'
 
 const routes = [
   { path: '/', component: Home },
   { path: '/cadastro', component: CadastroCliente },
   { path: '/login', component: Login },
-  { path: '/dashboard', component: Dashboard},
+  { path: '/dashboard', component: Dashboard },
   { path: '/servico', component: Servico },
-    { path: '/servico', component: CarServico }
+  { path: '/servico', component: CarServico },
+  { path: '/pet', component: Pet }
 
 
   

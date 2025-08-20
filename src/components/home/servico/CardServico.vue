@@ -71,10 +71,6 @@ defineProps<{
   margin-top: 1rem; /* um espaçamento de cima pra separar do texto */
 }
 
-.ul_link li {
-  /* se quiser, pode controlar espaçamento aqui */
-}
-
 .ul_link a {
   display: inline-block;      /* para aceitar padding */
   background-color: #333;     /* fundo escuro */

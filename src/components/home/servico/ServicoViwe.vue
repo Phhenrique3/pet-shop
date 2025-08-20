@@ -21,7 +21,7 @@
 import Header from '@/components/home/dashboard/headerDashbord.vue'
 import CardServico from '@/components/home/servico/CardServico.vue'
 
-const cards = [
+const cards  = [
   {
     icon: '🐶',
     title:'Banho e tosa',

@@ -5,19 +5,22 @@
       <ul class="nav-links">
         <li><a href="/dashboard">Home</a></li>
         <li><a href="/servico">Serviços</a></li>
-        <li><a href="/login">Sair</a></li>
-
+        <li><a href="/Pet">Meu Pet</a></li>
+        <li><button @click="logout" class="logout-button">Sair</button></li>
       </ul>
     </nav>
   </header>
 </template>
 
-<script>
-export default {
-  name: "headerDashbord"
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function logout() {
+  localStorage.clear() // limpa todo o localStorage
+  router.push('/login') // redireciona para a tela de login
 }
-
-
 </script>
 
 <style scoped>
@@ -39,15 +42,30 @@ export default {
   list-style: none;
   display: flex;
   gap: 1.5rem;
+  align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
-.nav-links a {
+.nav-links a,
+.nav-links button {
   color: white;
   text-decoration: none;
   font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links button:hover {
   text-decoration: underline;
+}
+
+.user-icon {
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
 }
 </style>
