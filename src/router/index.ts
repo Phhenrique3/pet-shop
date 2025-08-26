@@ -6,6 +6,7 @@ import Dashboard  from '../components/home/dashboard/dashboard.vue'
 import Servico from '../components/home/servico/ServicoViwe.vue'
 import CarServico from '../components/home/servico/CardServico.vue'
 import Pet from '../components/home/pet/petView.vue'
+import AgendamentoServico from '../components/home/servico/AgendamentoServico.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -13,11 +14,9 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/dashboard', component: Dashboard },
   { path: '/servico', component: Servico },
-  { path: '/servico', component: CarServico },
-  { path: '/pet', component: Pet }
-
-
-  
+  { path: '/Carservico', component: CarServico },
+  { path: '/pet', component: Pet },
+  { path: '/Agendamento',component: AgendamentoServico }
 ]
 
 const router = createRouter({

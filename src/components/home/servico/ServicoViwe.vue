@@ -13,6 +13,8 @@
       :title="card.title"
       :description="card.description"
       :highlight="card.highlight"
+      @agendar="irParaAgendamento"
+
     />
   </div>
 </template>
@@ -20,6 +22,16 @@
 <script lang="ts" setup>
 import Header from '@/components/home/dashboard/headerDashbord.vue'
 import CardServico from '@/components/home/servico/CardServico.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function irParaAgendamento(servicoTitle: string) {
+  router.push({ 
+    path: '/Agendamento', 
+    query: { servico: servicoTitle } 
+  })
+}
 
 const cards  = [
   {

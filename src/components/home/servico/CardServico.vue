@@ -3,9 +3,7 @@
     <div class="icon">{{ icon }}</div>
     <h3 class="title">{{ title }}</h3>
     <p class="description">{{ description }}</p>
-    <ul class="ul_link">
-      <li><a href="/">Agendar</a></li>
-    </ul>
+     <button @click="$emit('agendar', title)">Agendar</button>
   </div>
 </template>
 
@@ -64,25 +62,16 @@ defineProps<{
   text-align: center;
 }
 
-.ul_link {
-  display: flex;
-  list-style: none;
-  padding: 0; /* remove padding padrão da ul */
-  margin-top: 1rem; /* um espaçamento de cima pra separar do texto */
-}
 
-.ul_link a {
-  display: inline-block;      /* para aceitar padding */
-  background-color: #333;     /* fundo escuro */
-  color: white;               /* texto branco */
-  padding: 0.5rem 1.2rem;     /* espaço interno */
-  border-radius: 0.5rem;      /* bordas arredondadas */
-  text-decoration: none;      /* remove underline */
-  font-weight: 600;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  user-select: none;
+  background: #4caf50;
+  color: white;
+  font-weight: bold;
 }
 
 .ul_link a:hover {
