@@ -10,17 +10,17 @@
       <form @submit.prevent="cadastrarPet">
         <div class="form-group">
           <label>Nome do Pet</label>
-          <input v-model="form.nome" type="text" placeholder="Ex: Rex" />
+          <input v-model="form.nome" type="text" placeholder="Ex: Rex" required />
         </div>
 
         <div class="form-group">
           <label>Raça</label>
-          <input v-model="form.raca" type="text" placeholder="Ex: Labrador" />
+          <input v-model="form.raca" type="text" placeholder="Ex: Labrador" required />
         </div>
 
         <div class="form-group">
           <label>Espécie</label>
-          <input v-model="form.especie" type="text" placeholder="Cachorro, Gato..." />
+          <input v-model="form.especie" type="text" placeholder="Cachorro, Gato..." required />
         </div>
 
         <button type="submit">Cadastrar Pet</button>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Header from '../dashboard/headerDashbord.vue' // caminho relativo
+import Header from '../dashboard/headerDashbord.vue'
 export default {
   name: "CadastroPetCard",
   components: {
@@ -67,9 +67,7 @@ async cadastrarPet() {
     const data = await response.json()
 
     if (response.ok) {
-      // Somente aqui o alert será mostrado
-      alert('Pet cadastrado com sucesso!')
-
+      this.mensagem("🐾 Pet cadastrado com sucesso!")
       this.mensagem = "Pet cadastrado com sucesso!"
       this.form = { nome: "", raca: "", especie: "" } // limpa o formulário
     } else {
