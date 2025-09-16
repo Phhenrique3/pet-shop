@@ -17,12 +17,6 @@
     <label for="data">Data e hora do agendamento:</label>
     <input type="datetime-local" v-model="dataAgendamento" required />
 
-    <label for="status">Status:</label>
-    <select v-model="status" required>
-      <option value="pendente">Pendente</option>
-      <option value="confirmado">Confirmado</option>
-      <option value="cancelado">Cancelado</option>
-    </select>
 
     <label for="observacoes">Observações:</label>
     <textarea
@@ -47,7 +41,6 @@ const pets = ref<{ id: number; nome: string }[]>([]);
 const petId = ref<number | null>(null);
 const observacoes = ref("");
 const dataAgendamento = ref(""); // nova propriedade para a data
-const status = ref("pendente"); // status inicial padrão
 
 // pega id do cliente logado
 const clienteid = localStorage.getItem("clienteId");
@@ -76,7 +69,6 @@ async function agendar() {
       pet_id: petId.value,
       data: dataAgendamento.value, // usa a data selecionada
       observacoes: observacoes.value,
-      status: status.value, // envia o status
     }),
   });
   console.log("Pets carregados:", pets.value);
