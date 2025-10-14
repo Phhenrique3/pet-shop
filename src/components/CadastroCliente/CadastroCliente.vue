@@ -20,11 +20,14 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 
 const nome = ref('')
 const email = ref('')
 const senha = ref('')
 const telefone = ref('')
+const router = useRouter()
 
 async function cadastrarCliente() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -49,6 +52,7 @@ async function cadastrarCliente() {
     if (!res.ok) throw new Error('Erro no cadastro')
 
     alert('Cliente cadastrado com sucesso!')
+    router.push('/login')
     nome.value = ''
     email.value = ''
     senha.value = ''
