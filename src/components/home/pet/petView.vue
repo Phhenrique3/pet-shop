@@ -10,77 +10,143 @@
       <form @submit.prevent="cadastrarPet">
         <div class="form-group">
           <label>Nome do Pet</label>
-          <input v-model="form.nome" type="text" placeholder="Ex: Rex" required />
+          <input
+            v-model="form.nome"
+            type="text"
+            placeholder="Ex: Rex"
+            required
+          />
         </div>
 
         <div class="form-group">
           <label>Raça</label>
-          <input v-model="form.raca" type="text" placeholder="Ex: Labrador" required />
+          <input
+            v-model="form.raca"
+            type="text"
+            placeholder="Ex: Labrador"
+            required
+          />
         </div>
 
         <div class="form-group">
           <label>Espécie</label>
-          <input v-model="form.especie" type="text" placeholder="Cachorro, Gato..." required />
+          <input
+            v-model="form.especie"
+            type="text"
+            placeholder="Cachorro, Gato..."
+            required
+          />
         </div>
 
-        <button type="submit">Cadastrar Pet</button>
+        <button @click="cadastrarPet">Cadastrar Pet</button>
+        <div class="button-spacing">
+          <button @click="listasPets">Lista meu pet</button>
+        </div>
       </form>
-
       <!-- Mensagem -->
       <p v-if="mensagem" class="mensagem">{{ mensagem }}</p>
+
+      <div v-if="pets.length" class="pets-conteiner">
+        <h2>Meu Pets</h2>
+
+        <div class="pets-grid">
+          <div v-for="pet in pets" :key="pet.id" class="pet-card">
+            <p><strong>Nome:</strong> {{ pet.nome }}</p>
+            <p><strong>Raça:</strong> {{ pet.raca }}</p>
+            <p><strong>Espécie:</strong> {{ pet.especie }}</p>
+          </div>
+        </div>
+      
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Header from '../dashboard/headerDashbord.vue'
+import Header from "../dashboard/headerDashbord.vue";
 export default {
   name: "CadastroPetCard",
   components: {
-    Header
+    Header,
   },
   data() {
     return {
       form: {
         nome: "",
         raca: "",
-        especie: ""
+        especie: "",
       },
-      mensagem: ""
-    }
+      mensagem: "",
+      pets: [],
+    };
   },
   methods: {
-async cadastrarPet() {
-  try {
-    const clienteId = localStorage.getItem("clienteId")
-    if (!clienteId) {
-      this.mensagem = "Erro: Nenhum cliente cadastrado!"
-      return
-    }
+    async cadastrarPet() {
+      try {
+        const clienteId = localStorage.getItem("clienteId");
+        if (!clienteId) {
+          this.mensagem = "Erro: Nenhum cliente cadastrado!";
+          return;
+        }
 
-    const response = await fetch("http://localhost:3000/api/pets/cadastrar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...this.form, cliente_id: clienteId })
-    })
+        const response = await fetch(
+          "http://localhost:3000/api/pets/cadastrar",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...this.form, cliente_id: clienteId }),
+          }
+        );
 
-    const data = await response.json()
+        const data = await response.json();
 
-    if (response.ok) {
-      this.mensagem("🐾 Pet cadastrado com sucesso!")
-      this.mensagem = "Pet cadastrado com sucesso!"
-      this.form = { nome: "", raca: "", especie: "" } // limpa o formulário
-    } else {
-      this.mensagem = data.erro || "Erro ao cadastrar pet"
-    }
-  } catch (err) {
-    this.mensagem = "Erro ao conectar com o servidor"
-    console.error(err)
-  }
-}
+        if (response.ok) {
+          this.mensagem = "Pet cadastrado com sucesso!";
+          this.form = { nome: "", raca: "", especie: "" };
+          setTimeout(() => {
+            this.mensagem = "";
+          }, 3000);
+        } else {
+          this.mensagem = data.erro || "Erro ao cadastrar pet";
+        }
+      } catch (err) {
+        this.mensagem = "Erro ao conectar com o servidor";
+        console.error(err);
+      }
+    },
 
-  }
-}
+    // listar
+    async listasPets() {
+      try {
+        const clienteId = localStorage.getItem("clienteId");
+        if (!clienteId) {
+          this.mensagem = "⚠️ Nenhum cliente logado!";
+          return;
+        }
+
+        // Faz a requisição pra sua API
+        const response = await fetch(
+          `http://localhost:3000/api/Clientes/${clienteId}/pets`
+        );
+        const data = await response.json();
+
+        // Garante que vem um array
+        this.pets = Array.isArray(data) ? data : [];
+
+        console.log("Pets carregados:", this.pets);
+
+        if (this.pets.length === 0) {
+          this.mensagem = "🐾 Você ainda não tem pets cadastrados.";
+        } else {
+          this.mensagem = "";
+        }
+      } catch (err) {
+        console.error("Erro ao listar pets:", err);
+        this.mensagem = "❌ Erro ao listar pets.";
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -132,10 +198,28 @@ button:hover {
   background: #1565c0;
 }
 
+.button-spacing {
+  margin-top: 12px; /* espaçamento entre os botões */
+}
+
 .mensagem {
   margin-top: 12px;
   font-weight: bold;
   color: green;
   text-align: center;
+}
+
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.pet-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  text-align: left;
 }
 </style>

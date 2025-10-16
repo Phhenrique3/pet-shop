@@ -52,6 +52,7 @@ onMounted(async () => {
   pets.value = await resposta.json();
   console.log("Pets carregados:", pets.value); // ver se vem algo
 });
+//http://localhost:3000/api/Clientes/${clienteid}/pets
 
 
 // criar agendamento
