@@ -6,6 +6,7 @@
         <li><a href="/dashboard">Home</a></li>
         <li><a href="/servico">Serviços</a></li>
         <li><a href="/Pet">Meu Pet</a></li>
+        <li><button class="logout-button">Sair</button></li>
         <li><button @click="logout" class="logout-button">Sair</button></li>
       </ul>
     </nav>
@@ -13,13 +14,13 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 function logout() {
-  localStorage.clear() // limpa todo o localStorage
-  router.push('/login') // redireciona para a tela de login
+  localStorage.clear(); // limpa todo o localStorage
+  router.push("/login"); // redireciona para a tela de login
 }
 </script>
 

@@ -83,3 +83,8 @@ html {
   color: rgb(75, 85, 99);
   padding: 14px;
 }
+
+.bi-person-circle{
+  display: flex;
+  justify-content: center;
+}
