@@ -17,7 +17,6 @@
     <label for="data">Data e hora do agendamento:</label>
     <input type="datetime-local" v-model="dataAgendamento" required />
 
-
     <label for="observacoes">Observações:</label>
     <textarea
       v-model="observacoes"
@@ -28,54 +27,80 @@
   </form>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Header from "@/components/home/dashboard/headerDashbord.vue";
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 
 const route = useRoute();
-const servico = route.query.servico as string;
+const servico = route.query.servico;
 
 // Estado
-const pets = ref<{ id: number; nome: string }[]>([]);
-const petId = ref<number | null>(null);
+const pets = ref([]);
+const petId = ref(null);
 const observacoes = ref("");
-const dataAgendamento = ref(""); // nova propriedade para a data
+const dataAgendamento = ref("");
 
-// pega id do cliente logado
+// ID do cliente logado
 const clienteid = localStorage.getItem("clienteId");
 
-// buscar pets desse cliente
+// Buscar pets do cliente
 onMounted(async () => {
   if (!clienteid) return;
-  const resposta = await fetch(`http://localhost:3000/api/Clientes/${clienteid}/pets`);
+  const resposta = await fetch(
+    `http://localhost:3000/pets/clientes/${clienteid}/pets`
+  );
   pets.value = await resposta.json();
-  console.log("Pets carregados:", pets.value); // ver se vem algo
 });
-//http://localhost:3000/api/Clientes/${clienteid}/pets
 
-
-// criar agendamento
+// Função agendar
 async function agendar() {
   if (!clienteid || !petId.value || !dataAgendamento.value) {
     alert("Preencha todos os campos obrigatórios");
     return;
   }
 
+  // 1️⃣ Registrar agendamento no backend Node
   const resposta = await fetch("http://localhost:3000/atendimentos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       cliente_id: clienteid,
       pet_id: petId.value,
-      data: dataAgendamento.value, // usa a data selecionada
+      data: dataAgendamento.value,
       observacoes: observacoes.value,
     }),
   });
-  console.log("Pets carregados:", pets.value);
 
   const dados = await resposta.json();
   console.log("Agendamento criado:", dados);
   alert("Agendamento realizado com sucesso!");
+
+  // 2️⃣ Enviar para n8n
+  try {
+    const payloadN8n = {
+      cliente: clienteid,
+      pet: petId.value,
+      data: dataAgendamento.value,
+      observacoes: observacoes.value,
+      servico: servico,
+    };
+
+    const respostaN8n = await fetch(
+      "http://localhost:5678/webhook/agendamento", // Webhook ativo no n8n
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payloadN8n),
+      }
+    );
+
+    if (!respostaN8n.ok) throw new Error("Erro ao enviar para o n8n");
+
+    const dadosN8n = await respostaN8n.json();
+    console.log("Enviado ao n8n:", dadosN8n);
+  } catch (erro) {
+    console.error("Erro ao enviar para n8n:", erro);
+  }
 }
 </script>

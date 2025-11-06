@@ -90,7 +90,7 @@ export default {
         }
 
         const response = await fetch(
-          "http://localhost:3000/api/pets/cadastrar",
+          "http://localhost:3000/Pets/Cadastrar",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

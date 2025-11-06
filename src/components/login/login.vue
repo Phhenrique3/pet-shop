@@ -39,7 +39,7 @@ const router = useRouter();
 
 async function Login() {
   try {
-    const response = await fetch("http://localhost:3000/api/clientes/login", {
+    const response = await fetch("http://localhost:3000/login/api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
