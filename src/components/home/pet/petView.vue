@@ -54,9 +54,11 @@
             <p><strong>Nome:</strong> {{ pet.nome }}</p>
             <p><strong>Raça:</strong> {{ pet.raca }}</p>
             <p><strong>Espécie:</strong> {{ pet.especie }}</p>
+            <button @click="deletarPet(pet.id)">
+              Excluir cadastro do meu pet
+            </button>
           </div>
         </div>
-      
       </div>
     </div>
   </div>
@@ -89,14 +91,11 @@ export default {
           return;
         }
 
-        const response = await fetch(
-          "http://localhost:3000/Pets/Cadastrar",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...this.form, cliente_id: clienteId }),
-          }
-        );
+        const response = await fetch("http://localhost:3000/Pets/Cadastrar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...this.form, cliente_id: clienteId }),
+        });
 
         const data = await response.json();
 
@@ -126,7 +125,7 @@ export default {
 
         // Faz a requisição pra sua API
         const response = await fetch(
-          `http://localhost:3000/api/Clientes/${clienteId}/pets`
+          `http://localhost:3000/pets/Clientes/${clienteId}/pets`
         );
         const data = await response.json();
 
@@ -143,6 +142,32 @@ export default {
       } catch (err) {
         console.error("Erro ao listar pets:", err);
         this.mensagem = "❌ Erro ao listar pets.";
+      }
+    },
+
+    async deletarPet(petId) {
+      petId = Number(petId)
+      try {
+        const confirmar = confirm("Tem certeza que deseja excluir este pet?");
+        if (!confirmar) return;
+
+        const response = await fetch(`http://localhost:3000/Pets/${petId}`, {
+          method: "DELETE",
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          this.mensagem = "🐶 Pet excluído com sucesso!";
+          // Atualiza a lista automaticamente após deletar
+          this.pets = this.pets.filter((pet) => pet.id !== petId);
+          setTimeout(() => (this.mensagem = ""), 3000);
+        } else {
+          this.mensagem = data.erro || "❌ Erro ao excluir o pet.";
+        }
+      } catch (err) {
+        console.error("Erro ao excluir pet:", err);
+        this.mensagem = "⚠️ Falha na conexão com o servidor.";
       }
     },
   },

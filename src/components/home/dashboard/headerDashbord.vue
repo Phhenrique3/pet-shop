@@ -6,7 +6,6 @@
         <li><a href="/dashboard">Home</a></li>
         <li><a href="/servico">Serviços</a></li>
         <li><a href="/Pet">Meu Pet</a></li>
-        <li><button class="logout-button">Sair</button></li>
         <li><button @click="logout" class="logout-button">Sair</button></li>
       </ul>
     </nav>
