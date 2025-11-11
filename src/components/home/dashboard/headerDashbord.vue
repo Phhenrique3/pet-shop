@@ -14,6 +14,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import "/src/components/css/headerDashbord/headerDashbord.css";
 
 const router = useRouter();
 
@@ -23,49 +24,3 @@ function logout() {
 }
 </script>
 
-<style scoped>
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #4e73df;
-  padding: 1rem 2rem;
-  color: white;
-}
-
-.logo {
-  font-weight: bold;
-  font-size: 1.4rem;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-links a,
-.nav-links button {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.nav-links a:hover,
-.nav-links button:hover {
-  text-decoration: underline;
-}
-
-.user-icon {
-  height: 24px;
-  width: 24px;
-  cursor: pointer;
-}
-</style>
