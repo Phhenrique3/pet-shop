@@ -38,7 +38,7 @@
           />
         </div>
 
-        <button @click="cadastrarPet">Cadastrar Pet</button>
+        <button @@submit.prevent="cadastrarPet" >Cadastrar Pet</button>
         <div class="button-spacing">
           <button @click="listasPets">Lista meu pet</button>
         </div>
@@ -54,9 +54,11 @@
             <p><strong>Nome:</strong> {{ pet.nome }}</p>
             <p><strong>Raça:</strong> {{ pet.raca }}</p>
             <p><strong>Espécie:</strong> {{ pet.especie }}</p>
+            <button @click="deletarPet(pet.id)">
+              Excluir cadastro do meu pet
+            </button>
           </div>
         </div>
-      
       </div>
     </div>
   </div>
@@ -64,6 +66,7 @@
 
 <script>
 import Header from "../dashboard/headerDashbord.vue";
+import "@/components/css/cadastroPet/petView.css";
 export default {
   name: "CadastroPetCard",
   components: {
@@ -89,14 +92,11 @@ export default {
           return;
         }
 
-        const response = await fetch(
-          "http://localhost:3000/api/pets/cadastrar",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...this.form, cliente_id: clienteId }),
-          }
-        );
+        const response = await fetch("http://localhost:3000/Pets/Cadastrar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...this.form, cliente_id: clienteId }),
+        });
 
         const data = await response.json();
 
@@ -126,7 +126,7 @@ export default {
 
         // Faz a requisição pra sua API
         const response = await fetch(
-          `http://localhost:3000/api/Clientes/${clienteId}/pets`
+          `http://localhost:3000/pets/Clientes/${clienteId}/pets`
         );
         const data = await response.json();
 
@@ -145,81 +145,32 @@ export default {
         this.mensagem = "❌ Erro ao listar pets.";
       }
     },
+
+    async deletarPet(petId) {
+      petId = Number(petId);
+      try {
+        const confirmar = confirm("Tem certeza que deseja excluir este pet?");
+        if (!confirmar) return;
+
+        const response = await fetch(`http://localhost:3000/Pets/${petId}`, {
+          method: "DELETE",
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          this.mensagem = "🐶 Pet excluído com sucesso!";
+          // Atualiza a lista automaticamente após deletar
+          this.pets = this.pets.filter((pet) => pet.id !== petId);
+          setTimeout(() => (this.mensagem = ""), 3000);
+        } else {
+          this.mensagem = data.erro || "❌ Erro ao excluir o pet.";
+        }
+      } catch (err) {
+        console.error("Erro ao excluir pet:", err);
+        this.mensagem = "⚠️ Falha na conexão com o servidor.";
+      }
+    },
   },
 };
 </script>
-
-<style scoped>
-.card {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background: #f9f9f9;
-}
-
-h2 {
-  margin-bottom: 16px;
-  text-align: center;
-  color: #333;
-}
-
-.form-group {
-  margin-bottom: 12px;
-}
-
-label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: bold;
-  color: #444;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #bbb;
-  border-radius: 6px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background: #1565c0;
-}
-
-.button-spacing {
-  margin-top: 12px; /* espaçamento entre os botões */
-}
-
-.mensagem {
-  margin-top: 12px;
-  font-weight: bold;
-  color: green;
-  text-align: center;
-}
-
-.pets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 16px;
-}
-
-.pet-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 12px;
-  text-align: left;
-}
-</style>
