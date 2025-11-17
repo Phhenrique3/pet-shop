@@ -4,6 +4,39 @@
       <h1 class="title-cadastro">🐾 Bem-vindo!</h1>
       <h2 class="sub-title">Entre com seus dados</h2>
 
+<<<<<<< HEAD
+    <!-- Campo de email -->
+    <div class="input-container">
+      <input
+        class="input-cadastro"
+        v-model="email"
+        type="email"
+        placeholder="Digite seu e-mail"
+        required
+      />
+    </div>
+
+    <!-- Campo de senha com botão de olho -->
+    <div class="input-container">
+      <input
+        class="input-cadastro"
+        v-model="senha"
+        :type="showPassword ? 'text' : 'password'"
+        placeholder="Digite sua senha"
+        required
+      />
+      <button
+        type="button"
+        class="btn-eye"
+        @click="verSenha"
+        :title="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
+      >
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
+
+    <router-link to="/cadastro" class="cadastro">Cadastrar</router-link>
+=======
       <input
         class="input-cadastro"
         v-model="email"
@@ -11,6 +44,7 @@
         type="email"
         required
       />
+>>>>>>> 47ceb81227be2467d680d7064ea31848dae3b472
 
       <input
         class="input-cadastro"
@@ -20,6 +54,10 @@
         required
       />
 
+<<<<<<< HEAD
+    <p v-if="erro" class="erro">{{ erro }}</p>
+  </form>
+=======
       <router-link to="/cadastro" class="cadastro"
         >Não tem conta? Cadastre-se</router-link
       >
@@ -32,6 +70,7 @@
       <p v-if="erro" class="erro-msg">{{ erro }}</p>
     </form>
   </div>
+>>>>>>> 47ceb81227be2467d680d7064ea31848dae3b472
 </template>
 
 <script lang="ts" setup>
@@ -41,13 +80,29 @@ import { useRouter } from "vue-router";
 const email = ref("");
 const senha = ref("");
 const erro = ref("");
+const showPassword = ref(false);
 const router = useRouter();
+
+function verSenha() {
+  showPassword.value = !showPassword.value;
+}
 
 async function Login() {
   try {
     const response = await fetch("http://localhost:3000/login/api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+<<<<<<< HEAD
+      body: JSON.stringify({
+        email: email.value,
+        senha: senha.value,
+      }),
+    });
+
+    const data = await response.json().catch(() => ({
+      error: "Usuário ou senha inválido",
+    }));
+=======
       body: JSON.stringify({ email: email.value, senha: senha.value }),
     });
 
@@ -57,6 +112,7 @@ async function Login() {
     } catch {
       data = { error: "Usuário ou senha inválido" };
     }
+>>>>>>> 47ceb81227be2467d680d7064ea31848dae3b472
 
     if (response.ok) {
       localStorage.setItem("clienteId", data.cliente.id);
@@ -72,6 +128,29 @@ async function Login() {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 350px;
+  margin: auto;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-cadastro {
+  width: 100%;
+  padding: 12px 38px 12px 12px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+=======
 /* Fundo */
 .login-wrapper {
   min-height: 100vh;
@@ -123,10 +202,36 @@ async function Login() {
   border: 1px solid #ccc;
   font-size: 1rem;
   transition: 0.2s;
+>>>>>>> 47ceb81227be2467d680d7064ea31848dae3b472
 }
 
 .input-cadastro:focus {
   outline: none;
+<<<<<<< HEAD
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+.btn-eye {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #777;
+  cursor: pointer;
+}
+
+.btn-eye:hover {
+  color: #2563eb;
+}
+
+.erro {
+  color: red;
+  text-align: center;
+  font-weight: 500;
+}
+=======
   border-color: #4e73df;
   box-shadow: 0 0 5px rgba(78, 115, 223, 0.4);
 }
@@ -204,4 +309,5 @@ async function Login() {
   }
 }
 
+>>>>>>> 47ceb81227be2467d680d7064ea31848dae3b472
 </style>
