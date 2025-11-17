@@ -40,6 +40,13 @@
       />
       <input
         class="input-cadastro"
+        v-model="cpf"
+        placeholder="CPF 000.000.000-00"
+        minlength="11"
+        required
+      />
+      <input
+        class="input-cadastro"
         v-model="telefone"
         placeholder="Telefone"
         required
@@ -70,6 +77,7 @@ const nome = ref("");
 const email = ref("");
 const senha = ref("");
 const telefone = ref("");
+const cpf = ref("");
 const router = useRouter();
 
 async function cadastrarCliente() {
@@ -87,17 +95,19 @@ async function cadastrarCliente() {
       body: JSON.stringify({
         nome: nome.value,
         email: email.value,
+        cpf: cpf.value,
         senha: senha.value,
         telefone: telefone.value,
       }),
     });
 
-    if (!res.ok) throw new Error("Erro no cadastro");
+    if (!res.ok) throw new Error(" no cadastro, CPF já cadastrado ");
 
     alert("🎉 Cliente cadastrado com sucesso!");
     router.push("/login");
 
     nome.value = "";
+    cpf.value = "";
     email.value = "";
     senha.value = "";
     telefone.value = "";
